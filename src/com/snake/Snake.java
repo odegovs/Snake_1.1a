@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 public class Snake {
 
+    //  TODO: name snake may be confusing further in the code. Rename to image
     public static Image snake;
 
     public static ArrayList<Integer> snakeX = new ArrayList<Integer>();
@@ -21,12 +22,14 @@ public class Snake {
 
     static Direction dir;
 
+    //  TODO: move to separate file to improve readability
     enum Direction {
         RIGHT(32, 0),
         LEFT(-32, 0),
         UP(0, -32),
         DOWN(0, 32);
 
+        //  TODO: read https://www.oracle.com/java/technologies/javase/codeconventions-declarations.html#2992
         private int x, y;
 
         Direction(int x, int y) {
@@ -35,9 +38,12 @@ public class Snake {
         }
     }
 
+    //  TODO: read https://medium.com/better-programming/comments-in-your-code-730cfd1dde02
     /**
      * Import snake image
      */
+    // TODO: class name is Snake, so it's alreacy clear that everything here is about Snake.
+    // so it's unnecessary to put word snake everywhere
     public static void snakeImage() {
         ImageIcon getSnake = new ImageIcon("snake.png");
         snake = getSnake.getImage();

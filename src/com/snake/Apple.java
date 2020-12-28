@@ -16,11 +16,13 @@ public class Apple {
 
     public static int appleX;
     public static int appleY;
+    //  TODO: see my comment at com/snake/Snake.java:17
     public static Image apple;
 
     /**
      * Import apple image
      */
+    //  TODO: see my comment at com/snake/Snake.java:45
     public static void appleImage() {
         ImageIcon getApple = new ImageIcon("apple.png");
         apple = getApple.getImage();
