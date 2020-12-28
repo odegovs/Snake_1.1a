@@ -34,7 +34,7 @@ public class Apple {
         appleY = new Random().nextInt(16) * 32;
     }
 
-    /**
+    /** 
      * Check if apple was eaten
      */
     public static void checkApple() {
