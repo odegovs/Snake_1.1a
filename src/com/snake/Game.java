@@ -15,6 +15,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import static com.snake.Snake.crd;
+
 public class Game extends JPanel implements ActionListener {
 
     private boolean inGame = true;
@@ -27,26 +29,26 @@ public class Game extends JPanel implements ActionListener {
         public void keyPressed(KeyEvent e) {
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_UP:
-                    if (Snake.dir != Snake.Direction.DOWN) {
-                        Snake.dir = Snake.Direction.UP;
+                    if (Snake.dir != Direction.D.DOWN) {
+                        Snake.dir = Direction.D.UP;
                     }
                     break;
 
                 case KeyEvent.VK_DOWN:
-                    if (Snake.dir != Snake.Direction.UP) {
-                        Snake.dir = Snake.Direction.DOWN;
+                    if (Snake.dir != Direction.D.UP) {
+                        Snake.dir = Direction.D.DOWN;
                     }
                     break;
 
                 case KeyEvent.VK_RIGHT:
-                    if (Snake.dir != Snake.Direction.LEFT) {
-                        Snake.dir = Snake.Direction.RIGHT;
+                    if (Snake.dir != Direction.D.LEFT) {
+                        Snake.dir = Direction.D.RIGHT;
                     }
                     break;
 
                 case KeyEvent.VK_LEFT:
-                    if (Snake.dir != Snake.Direction.RIGHT) {
-                        Snake.dir = Snake.Direction.LEFT;
+                    if (Snake.dir != Direction.D.RIGHT) {
+                        Snake.dir = Direction.D.LEFT;
                     }
                     break;
             }
@@ -57,8 +59,8 @@ public class Game extends JPanel implements ActionListener {
      * Game initialization function
      */
     public Game() {
-        Apple.appleImage();
-        Snake.snakeImage();
+        Apple.image();
+        Snake.image();
         startGame();
         addKeyListener(new KeyListener());
         setFocusable(true);
@@ -68,8 +70,8 @@ public class Game extends JPanel implements ActionListener {
      * Create objects
      */
     public void startGame() {
-        Apple.createApple();
-        Snake.createSnake();
+        Apple.create();
+        Snake.create();
 
         Timer timer = new Timer(300, this);
         timer.start();
@@ -79,12 +81,14 @@ public class Game extends JPanel implements ActionListener {
      * Check if snake was crashed
      */
     public void checkCrashing() {
-        if (Coordinates.snakeX == 512 || Coordinates.snakeX < 0 ||
-            Coordinates.snakeY == 512 || Coordinates.snakeY < 0) {
+        if (crd.getX() == 512 || crd.getX() < 0 ||
+            crd.getY() == 512 || crd.getY() < 0) {
             inGame = false;
         }
-        for (int i = Snake.snakeX.size() - 1; i > 0; i--) {
-            if (Snake.snakeX.get(0).equals(Snake.snakeX.get(i)) && Snake.snakeY.get(0).equals(Snake.snakeY.get(i))) {
+
+        for (int i = Snake.snake.size() - 1; i > 0; i--) {
+            if (crd.getX() == Integer.parseInt(Snake.snake.get(i).xString()) &&
+                    crd.getY() == Integer.parseInt(Snake.snake.get(i).yString())) {
                 inGame = false;
                 break;
             }
@@ -100,8 +104,9 @@ public class Game extends JPanel implements ActionListener {
         if (inGame) {
             gr.drawImage(Apple.apple, Apple.appleX, Apple.appleY, this);
 
-            for (int i = 0; i < Snake.snakeX.size(); i++) {
-                gr.drawImage(Snake.snake, Snake.snakeX.get(i), Snake.snakeY.get(i), this);
+            for (int i = 0; i < Snake.snake.size(); i++) {
+                gr.drawImage(Snake.cell, Integer.parseInt(Snake.snake.get(i).xString()),
+                        Integer.parseInt(Snake.snake.get(i).yString()), this);
             }
         } else {
             String over = "You Lost";
@@ -114,7 +119,7 @@ public class Game extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (inGame) {
             Snake.move();
-            Apple.checkApple();
+            Apple.check();
             checkCrashing();
             repaint();
         }

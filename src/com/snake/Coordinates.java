@@ -8,8 +8,40 @@
 
 package com.snake;
 
-public class Coordinates {
+import java.util.ArrayList;
 
-    public static int snakeX;
-    public static int snakeY;
+public class Coordinates {
+    private int x;
+    private int y;
+
+    Coordinates(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    Coordinates() {}
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public String xString() {
+        return "" + x;
+    }
+
+    public String yString() {
+        return "" + y;
+    }
 }

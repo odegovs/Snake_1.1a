@@ -13,67 +13,39 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Snake {
+    public static Image cell;
 
-    public static Image snake;
+    static Direction.D dir;
 
-    public static ArrayList<Integer> snakeX = new ArrayList<Integer>();
-    public static ArrayList<Integer> snakeY = new ArrayList<Integer>();
+    static ArrayList<Coordinates> snake = new ArrayList();
+    static Coordinates crd = new Coordinates();
 
-    static Direction dir;
-
-    enum Direction {
-        RIGHT(32, 0),
-        LEFT(-32, 0),
-        UP(0, -32),
-        DOWN(0, 32);
-
-        private int x, y;
-
-        Direction(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
-
-    /**
-     * Import snake image
-     */
-    public static void snakeImage() {
+    public static void image() {
         ImageIcon getSnake = new ImageIcon("snake.png");
-        snake = getSnake.getImage();
+        cell = getSnake.getImage();
     }
 
     /**
      * Create first three elements of snake
      */
-    public static void createSnake() {
-        for (int i = 3; i > 0; i--) {
-            snakeX.add(64 + i * 32);
-            snakeY.add(64);
-        }
-        dir = Direction.RIGHT;
+    public static void create() {
+        snake.add(new Coordinates(128, 64));
+        snake.add(new Coordinates(96, 64));
+        snake.add(new Coordinates(64, 64));
+        dir = Direction.D.RIGHT;
     }
 
-    /**
-     * Snake growing function
-     */
-    public static void growSnake() {
-        snakeX.add(snakeX.get(snakeX.size() - 1) - dir.x);
-        snakeY.add(snakeY.get(snakeY.size() - 1) - dir.y);
+    public static void grow() {
+        snake.add(new Coordinates(crd.getX() - dir.x, crd.getY() - dir.y));
     }
 
-    /**
-     * Snake moving function
-     */
     public static void move() {
-        for (int i = snakeX.size() - 1; i > 0; i--) {
-            Coordinates.snakeX = snakeX.get(0) + dir.x;
-            Coordinates.snakeY = snakeY.get(0) + dir.y;
+        for (int i = snake.size() - 1; i > 0; i--) {
+            crd.setX(Integer.parseInt(snake.get(0).xString()) + dir.x); // Change
+            crd.setY(Integer.parseInt(snake.get(0).yString()) + dir.y); // direction
 
-            snakeX.set(i, snakeX.get(i - 1));
-            snakeY.set(i, snakeY.get(i - 1));
+            snake.set(i, snake.get(i - 1)); // Move snake for one element
         }
-        snakeX.set(0, Coordinates.snakeX);
-        snakeY.set(0, Coordinates.snakeY);
+        snake.set(0, new Coordinates(crd.getX(), crd.getY()));
     }
 }
